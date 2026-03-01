@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Compressor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+        input[type="file"], input[type="number"], select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .images {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .image-container {
+            background: #fff;
+            padding: 10px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .image-container img {
+            max-width: 250px;
+            max-height: 250px;
+            display: block;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+        .size-info {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #2196F3;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .download-btn:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Compressor</h1>
+    <form id="upload-form" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" id="image" required>
+        <label>Quality (10-100):</label>
+        <input type="number" name="quality" value="80" min="10" max="100">
+        <label>Max size (KB):</label>
+        <input type="number" name="max_size" value="500">
+        <label>Output format:</label>
+        <select name="format">
+            <option value="webp">WebP</option>
+            <option value="jpeg">JPEG</option>
+            <option value="png">PNG</option>
+        </select>
+        <button type="submit">Compress Image</button>
+    </form>
+
+    <div class="images" id="images-preview" style="display:none;">
+        <div class="image-container">
+            <div class="size-info" id="original-size">Original Size: </div>
+            <img id="original-img" src="">
+        </div>
+        <div class="image-container">
+            <div class="size-info" id="compressed-size">Compressed Size: </div>
+            <img id="compressed-img" src="">
+            <a id="download-btn" href="#" class="download-btn" download="compressed">Download</a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('upload-form');
+        const originalImg = document.getElementById('original-img');
+        const compressedImg = document.getElementById('compressed-img');
+        const originalSize = document.getElementById('original-size');
+        const compressedSize = document.getElementById('compressed-size');
+        const downloadBtn = document.getElementById('download-btn');
+        const previewContainer = document.getElementById('images-preview');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const file = document.getElementById('image').files[0];
+            if (!file) return;
+
+            // Show original image preview
+            const reader = new FileReader();
+            reader.onload = () => {
+                originalImg.src = reader.result;
+                originalSize.textContent = `Original Size: ${(file.size / 1024).toFixed(2)} KB`;
+            };
+            reader.readAsDataURL(file);
+
+            // Prepare form data
+            const formData = new FormData(form);
+
+            // Send POST request to server
+            const response = await fetch("/", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                alert("Compression failed!");
+                return;
+            }
+
+            // Get compressed image as blob
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            compressedImg.src = url;
+            compressedSize.textContent = `Compressed Size: ${(blob.size / 1024).toFixed(2)} KB`;
+            downloadBtn.href = url;
+            downloadBtn.download = `compressed.${formData.get("format")}`;
+
+            previewContainer.style.display = "flex";
+        });
+    </script>
+</body>
+</html>
