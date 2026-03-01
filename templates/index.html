@@ -1,14 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Image Compressor</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<style>
-    /* Global Styles */
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+  <head>
+    <meta charset="UTF-8" />
+    <title>Image Compressor</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Global Styles */
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #74ebd5, #acb6e5);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -16,59 +19,62 @@
         min-height: 100vh;
         margin: 0;
         animation: fadeIn 1s ease-in-out;
-    }
+      }
 
-    h1 {
+      h1 {
         color: #fff;
         margin-bottom: 30px;
-        text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
         animation: slideDown 0.8s ease;
-    }
+      }
 
-    form {
+      form {
         background: #ffffffee;
         padding: 25px 30px;
         border-radius: 16px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         width: 100%;
         max-width: 500px;
         display: flex;
         flex-direction: column;
         gap: 15px;
         animation: popUp 0.8s ease;
-    }
+      }
 
-    input[type="file"], input[type="number"], select, button {
+      input[type="file"],
+      input[type="number"],
+      select,
+      button {
         width: 100%;
         padding: 12px 15px;
         border-radius: 8px;
         border: 1px solid #ccc;
         font-size: 15px;
         transition: all 0.3s ease;
-    }
+      }
 
-    input[type="file"]:hover,
-    input[type="number"]:hover,
-    select:hover {
-        border-color: #4CAF50;
+      input[type="file"]:hover,
+      input[type="number"]:hover,
+      select:hover {
+        border-color: #4caf50;
         box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
-    }
+      }
 
-    button {
-        background: linear-gradient(90deg, #4CAF50, #45a049);
+      button {
+        background: linear-gradient(90deg, #4caf50, #45a049);
         color: white;
         border: none;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
-    }
+      }
 
-    button:hover {
+      button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
 
-    .images {
+      .images {
         display: flex;
         gap: 25px;
         flex-wrap: wrap;
@@ -77,63 +83,69 @@
         opacity: 0;
         transform: translateY(20px);
         transition: all 0.5s ease;
-    }
+      }
 
-    .images.show {
+      .images.show {
         opacity: 1;
         transform: translateY(0);
-    }
+      }
 
-    .image-container {
+      .image-container {
         background: #fff;
         padding: 15px;
         border-radius: 14px;
         text-align: center;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         position: relative;
         overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
 
-    .image-container:hover {
+      .image-container:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 25px rgba(0,0,0,0.2);
-    }
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+      }
 
-    .image-container img {
+      .image-container img {
         max-width: 250px;
         max-height: 250px;
         border-radius: 10px;
         margin-bottom: 10px;
-        transition: transform 0.5s ease, opacity 0.5s ease;
-    }
+        transition:
+          transform 0.5s ease,
+          opacity 0.5s ease;
+      }
 
-    .size-info {
+      .size-info {
         font-weight: 600;
         margin-bottom: 10px;
         color: #333;
-    }
+      }
 
-    .download-btn {
+      .download-btn {
         display: inline-block;
         padding: 10px 18px;
-        background: linear-gradient(90deg, #2196F3, #0b7dda);
+        background: linear-gradient(90deg, #2196f3, #0b7dda);
         color: white;
         border-radius: 8px;
         text-decoration: none;
         font-weight: 600;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
 
-    .download-btn:hover {
+      .download-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
 
-    /* Loading Animation */
-    .loader {
+      /* Loading Animation */
+      .loader {
         border: 5px solid #f3f3f3;
-        border-top: 5px solid #4CAF50;
+        border-top: 5px solid #4caf50;
         border-radius: 50%;
         width: 50px;
         height: 50px;
@@ -144,126 +156,158 @@
         margin: -25px 0 0 -25px;
         display: none;
         z-index: 10;
-    }
-    #preview-compress-image{
+      }
+      #preview-compress-image {
         display: none;
-    }
+      }
 
-    /* Animations */
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
+      /* Animations */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
 
-    @keyframes slideDown {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-    @keyframes popUp {
-        from { opacity: 0; transform: scale(0.9); }
-        to { opacity: 1; transform: scale(1); }
-    }
-</style>
-</head>
-<body>
-<h1>Image Compressor</h1>
-<form id="upload-form" method="POST" enctype="multipart/form-data">
-    <input type="file" name="image" id="image" required>
-    <label>Quality (10-100):</label>
-    <input type="number" name="quality" value="80" min="10" max="100">
-    <label>Max size (KB):</label>
-    <input type="number" name="max_size" value="500">
-    <label>Output format:</label>
-    <select name="format">
+      @keyframes popUp {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      button:disabled {
+        background: #aaa; /* Grey background */
+        cursor: not-allowed; /* Show forbidden cursor */
+        opacity: 0.6; /* Slightly transparent */
+        transform: none; /* Remove hover effect */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Image Compressor</h1>
+    <form id="upload-form" method="POST" enctype="multipart/form-data">
+      <input type="file" name="image" id="image" required />
+      <label>Quality (10-100):</label>
+      <input type="number" name="quality" value="80" min="10" max="100" />
+      <label>Max size (KB):</label>
+      <input type="number" name="max_size" value="500" />
+      <label>Output format:</label>
+      <select name="format">
         <option value="webp">WebP</option>
         <option value="jpeg">JPEG</option>
         <option value="png">PNG</option>
-    </select>
-    <button type="submit">Compress Image</button>
-    <div class="loader" id="loader"></div>
-</form>
+      </select>
+      <button id="submit-form" type="submit">Compress Image</button>
+      <div class="loader" id="loader"></div>
+    </form>
 
-<div class="images" id="images-preview">
-    <div class="image-container">
-        <div class="size-info" id="original-size">Original Size: </div>
-        <img id="original-img" src="">
+    <div class="images" id="images-preview">
+      <div class="image-container">
+        <div class="size-info" id="original-size">Original Size:</div>
+        <img id="original-img" src="" />
+      </div>
+      <div class="image-container" id="preview-compress-image">
+        <div class="size-info" id="compressed-size">Compressed Size:</div>
+        <img id="compressed-img" src="" />
+        <a id="download-btn" href="#" class="download-btn" download="compressed"
+          >Download</a
+        >
+      </div>
     </div>
-    <div class="image-container" id="preview-compress-image">
-        <div class="size-info" id="compressed-size">Compressed Size: </div>
-        <img id="compressed-img" src="">
-        <a id="download-btn" href="#" class="download-btn" download="compressed">Download</a>
-    </div>
-</div>
 
-<script>
-    const form = document.getElementById('upload-form');
-    const originalImg = document.getElementById('original-img');
-    const compressedImg = document.getElementById('compressed-img');
-    const originalSize = document.getElementById('original-size');
-    const compressedSize = document.getElementById('compressed-size');
-    const downloadBtn = document.getElementById('download-btn');
-    const previewContainer = document.getElementById('images-preview');
-    const loader = document.getElementById('loader');
-const imageInput = document.getElementById('image');
-const compressedContainer = document.getElementById('preview-compress-image');
+    <script>
+      const form = document.getElementById("upload-form");
+      const originalImg = document.getElementById("original-img");
+      const compressedImg = document.getElementById("compressed-img");
+      const originalSize = document.getElementById("original-size");
+      const compressedSize = document.getElementById("compressed-size");
+      const downloadBtn = document.getElementById("download-btn");
+      const previewContainer = document.getElementById("images-preview");
+      const loader = document.getElementById("loader");
+      const imageInput = document.getElementById("image");
+      const compressedContainer = document.getElementById(
+        "preview-compress-image",
+      );
+      const submitBtn = document.getElementById("submit-form");
+      // Show original image instantly on file select
+      imageInput.addEventListener("change", () => {
+        const file = imageInput.files[0];
+        if (!file) return;
 
-// Show original image instantly on file select
-imageInput.addEventListener('change', () => {
-    const file = imageInput.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-        originalImg.src = reader.result;
-        originalSize.textContent = `Original Size: ${(file.size / 1024).toFixed(2)} KB`;
-        previewContainer.classList.add('show'); // show the preview container
-    };
-    reader.readAsDataURL(file);
-});
-    form.addEventListener('submit', async (e) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          originalImg.src = reader.result;
+          originalSize.textContent = `Original Size: ${(file.size / 1024).toFixed(2)} KB`;
+          previewContainer.classList.add("show"); // show the preview container
+        };
+        reader.readAsDataURL(file);
+      });
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const file = document.getElementById('image').files[0];
+        submitBtn.disabled = true;
+        const file = document.getElementById("image").files[0];
         if (!file) return;
 
         // Show original image preview instantly
         const reader = new FileReader();
         reader.onload = () => {
-            originalImg.src = reader.result;
-            originalSize.textContent = `Original Size: ${(file.size / 1024).toFixed(2)} KB`;
+          originalImg.src = reader.result;
+          originalSize.textContent = `Original Size: ${(file.size / 1024).toFixed(2)} KB`;
         };
         reader.readAsDataURL(file);
 
-        previewContainer.classList.remove('show'); // hide preview during compression
-        loader.style.display = 'block'; // show loader
+        previewContainer.classList.remove("show"); // hide preview during compression
+        loader.style.display = "block"; // show loader
 
         // Prepare form data
         const formData = new FormData(form);
 
         try {
-            const response = await fetch("/", { method: "POST", body: formData });
-            if (!response.ok) throw new Error("Compression failed!");
+          const response = await fetch("/", { method: "POST", body: formData });
+          if (!response.ok) throw new Error("Compression failed!");
 
-            const blob = await response.blob();
-            const url = URL.createObjectURL(blob);
-            compressedImg.src = url;
-            compressedSize.textContent = `Compressed Size: ${(blob.size / 1024).toFixed(2)} KB`;
-            downloadBtn.href = url;
-            downloadBtn.download = `compressed.${formData.get("format")}`;
-            
-            previewContainer.classList.add('show'); // show preview
-            compressedContainer.style.display = 'block'; // show compressed image container
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
+          compressedImg.src = url;
+          compressedSize.textContent = `Compressed Size: ${(blob.size / 1024).toFixed(2)} KB`;
+          downloadBtn.href = url;
+          downloadBtn.download = `compressed.${formData.get("format")}`;
+
+          previewContainer.classList.add("show"); // show preview
+          compressedContainer.style.display = "flex"; // show compressed image container
         } catch (err) {
-            alert(err.message);
+          alert(err.message);
         } finally {
-            loader.style.display = 'none'; // hide loader
+          loader.style.display = "none"; // hide loader
+          submitBtn.disabled = false;
         }
-    });
-</script>
-</body>
+      });
+    </script>
+  </body>
 </html>
