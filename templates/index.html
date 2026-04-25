@@ -7,9 +7,209 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
-      <link rel="icon" type="image/x-icon" href="fav.jpeg">
+    <link rel="icon" href="https://play-lh.googleusercontent.com/S2MQ9wPwcaop4lMF2tEo8-DRdTVDjmush-RW3mqmeNBZLGbaplS09bwOag35l-sb3o0=w480-h960-rw" type="image/x-icon">
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+      /* Global Styles */
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #74ebd5, #acb6e5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+        min-height: 100vh;
+        margin: 0;
+        animation: fadeIn 1s ease-in-out;
+      }
+
+      h1 {
+        color: #fff;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+        animation: slideDown 0.8s ease;
+      }
+
+      form {
+        background: #ffffffee;
+        padding: 25px 30px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        animation: popUp 0.8s ease;
+      }
+
+      input[type="file"],
+      input[type="number"],
+      select,
+      button {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+        transition: all 0.3s ease;
+      }
+
+      input[type="file"]:hover,
+      input[type="number"]:hover,
+      select:hover {
+        border-color: #4caf50;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+      }
+
+      button {
+        background: linear-gradient(90deg, #4caf50, #45a049);
+        color: white;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .images {
+        display: flex;
+        gap: 25px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 30px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
+      }
+
+      .images.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .image-container {
+        background: #fff;
+        padding: 15px;
+        border-radius: 14px;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .image-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .image-container img {
+        max-width: 250px;
+        max-height: 250px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        transition:
+          transform 0.5s ease,
+          opacity 0.5s ease;
+      }
+
+      .size-info {
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .download-btn {
+        display: inline-block;
+        padding: 10px 18px;
+        background: linear-gradient(90deg, #2196f3, #0b7dda);
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Loading Animation */
+      .loader {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #4caf50;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -25px 0 0 -25px;
+        display: none;
+        z-index: 10;
+      }
+      #preview-compress-image {
+        visibility: hidden;
+      }
+
+      /* Animations */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes popUp {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      button:disabled {
+        background: #aaa; /* Grey background */
+        cursor: not-allowed; /* Show forbidden cursor */
+        opacity: 0.6; /* Slightly transparent */
+        transform: none; /* Remove hover effect */
+      }
+    </style>
   </head>
   <body>
     <h1>Image Compressor</h1>
